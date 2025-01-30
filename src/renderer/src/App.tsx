@@ -33,7 +33,7 @@ function App(): JSX.Element {
           </SidebarList>
         </Sidebar>
         <Content ref={contentContainerRef} className="border-l bg-zinc-900/50 border-l-white/20">
-          {activeItemPageMap(activeItem)}
+         {activeItemPageMap(activeItem)}
         </Content>
       </Layout>
     </>
