@@ -24,6 +24,8 @@
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
     "electron-updater": "^6.1.7",
+    "jotai": "^2.11.1",
+    "primeicons": "^7.0.0",
     "primereact": "^10.9.2",
     "tailwind-merge": "^2.6.0"
   },

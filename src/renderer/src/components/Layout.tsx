@@ -18,6 +18,9 @@ export const Sidebar = ({ children, className, ...props }: ComponentProps<'aside
       className={twMerge('w-[250px] mt-10 h[100vh + 10px] overflow-auto', className)}
       {...props}
     >
+      <div className="flex items-center justify-center mt-2">
+        <h1 className="text-2xl font-bold text-gray-400 self-center">devlog</h1>
+      </div>
       {children}
     </aside>
   )
