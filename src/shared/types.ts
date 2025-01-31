@@ -4,3 +4,10 @@ export interface Todo {
   completed: boolean
   date: string
 }
+
+export interface TIL {
+  id: number
+  title: string
+  date: string
+  tags?: string[]
+}

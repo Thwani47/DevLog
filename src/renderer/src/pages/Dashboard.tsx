@@ -1,5 +1,4 @@
-import { ActionButton } from '@/components'
-import { TodayTodosCard } from '@renderer/components/Card'
+import { ActionButton, RecentTILsCard, TodayTodosCard } from '@/components'
 
 export const Dashboard = () => {
   return (
@@ -25,8 +24,9 @@ export const Dashboard = () => {
       </div>
       {/* Summaries */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
-        <TodayTodosCard onClick={() => {}} />
-        <TodayTodosCard onClick={() => {}} /> {/* this will be a TIL Card */}
+        <TodayTodosCard />
+
+        <RecentTILsCard/>
       </div>
     </div>
   )

@@ -1,33 +1,25 @@
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Card } from 'primereact/card'
 import { useAtomValue } from 'jotai'
-import { todosAtom } from '@/store'
-type TododayTodosCardProps = ComponentProps<typeof Card> & {
-  onClick: () => void
-}
+import { completedTodosAtom, todayTodosAtom } from '@/store'
 
-export const TodayTodosCard = ({ onClick, className, ...props }: TododayTodosCardProps) => {
-  const todos = useAtomValue(todosAtom)
-  const today = new Date().toISOString().split('T')[0]
-
-  const todayTodos = todos.filter((todo) => todo.date === today)
-  const completedTodos = todayTodos.filter((todo) => todo.completed).length
-  const totalTodos = todayTodos.length
+export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) => {
+  const todayTodos = useAtomValue(todayTodosAtom)
+  const completedTodos = useAtomValue(completedTodosAtom)
 
   return (
-    <Card
+    <div
       {...props}
       className={twMerge(
-        'p-4 bg-zinc-800 border border-white/10 rounded-lg shadow-md hover:bg-zinc-700 transition cursor-pointer',
+        'p-4 bg-zinc-800 border border-white/10 rounded-lg shadow-md hover:bg-zinc-700 transition cursor-pointer flex flex-col',
         className
       )}
-      onClick={onClick}
+      onClick={() => console.log('Clicked')}
     >
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold text-white">Today&apos;s Todos</h3>
         <span className="text-sm text-gray-400">
-          {completedTodos}/{totalTodos} Done
+          {completedTodos.length}/{todayTodos.length} Done
         </span>
       </div>
 
@@ -47,9 +39,11 @@ export const TodayTodosCard = ({ onClick, className, ...props }: TododayTodosCar
         ))}
       </ul>
 
-      <p className="mt-3 text-gray-300 text-sm">
-        {completedTodos < totalTodos ? 'Keep going! Finish your tasks.' : 'No todos for today!'}
+      <p className="mt-auto text-gray-400 text-sm ">
+        {completedTodos.length < todayTodos.length
+          ? 'Keep going! Finish your tasks.'
+          : 'No todos for today!'}
       </p>
-    </Card>
+    </div>
   )
 }

@@ -10,3 +10,15 @@ export const todosAtom = atom<Todo[]>([
     date: new Date().toISOString().split('T')[0]
   }
 ])
+
+export const todayTodosAtom = atom((get) => {
+  const todos = get(todosAtom)
+  const today = new Date().toISOString().split('T')[0]
+
+  return todos.filter((todo) => todo.date === today)
+})
+
+export const completedTodosAtom = atom((get) => {
+  const todos = get(todosAtom)
+  return todos.filter((todo) => todo.completed)
+})
