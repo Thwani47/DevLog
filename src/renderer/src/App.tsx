@@ -23,7 +23,8 @@ function App(): JSX.Element {
         <Sidebar className="p-2">
           <SidebarList className="mt-2 space-y-1 p-2">
             <SidebarListItem label="Dashboard" icon="pi-chart-bar" iconColor="green" />
-            <SidebarListItem label="Today's Todos" icon="pi-pen-to-square" iconColor="white" />
+            <SidebarListItem label="Journal" icon="pi-pen-to-square" iconColor="cyan" />
+            <SidebarListItem label="Todos" icon="pi-list" iconColor="white" />
             <SidebarListItem label="TIL" icon="pi-lightbulb" iconColor="yellow" />
             <SidebarListItem label="Brag Board" icon="pi-star-fill" iconColor="gold" />
             <SidebarListItem label="Goals" icon="pi-chart-line" iconColor="slateblue" />
@@ -33,7 +34,7 @@ function App(): JSX.Element {
           </SidebarList>
         </Sidebar>
         <Content ref={contentContainerRef} className="border-l bg-zinc-900/50 border-l-white/20">
-         {activeItemPageMap(activeItem)}
+          {activeItemPageMap(activeItem)}
         </Content>
       </Layout>
     </>

@@ -23,10 +23,12 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
+    "@radix-ui/react-context-menu": "^2.2.5",
     "electron-updater": "^6.1.7",
     "jotai": "^2.11.1",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.2",
+    "radix-ui": "^1.1.2",
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {

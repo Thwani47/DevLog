@@ -11,13 +11,13 @@ export const RecentTILSummaryCard = ({ til, className, ...props }: RecentTILSumm
     <div
       key={til.id}
       className={twMerge(
-        'p-2 bg-zinc-600 rounded-md transition-transform hover:scale-105',
+        'p-2 border border-zinc-700/70 rounded-md transition-transform hover:scale-105',
         className
       )}
       {...props}
     >
-      <p className="text-sm font-medium text-white">{til.title}</p>
-      <p className="text-xs text-gray-400">{til.date}</p>
+      <p className="text-xs lg:text-lg font-medium text-white">{til.title}</p>
+      <p className="text-xs lg:text-md text-gray-400">{til.date}</p>
       {til.tags && (
         <div className="mt-1 flex flex-wrap gap-1">
           {til.tags.map((tag, index) => (

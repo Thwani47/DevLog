@@ -25,8 +25,7 @@ export const Dashboard = () => {
       {/* Summaries */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
         <TodayTodosCard />
-
-        <RecentTILsCard/>
+        <RecentTILsCard />
       </div>
     </div>
   )

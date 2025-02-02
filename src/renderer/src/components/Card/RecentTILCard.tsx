@@ -13,7 +13,7 @@ export const RecentTILsCard = ({ className, ...props }: ComponentProps<typeof Ca
       className={twMerge('p-4 bg-zinc-800 border border-white/10 rounded-lg', className)}
       {...props}
     >
-      <h2 className="text-lg font-semibold text-white">I recently learned this</h2>
+      <h2 className="text-md lg:text-xl font-semibold text-white">I recently learned this</h2>
 
       <div className="mt-2 space-y-3">
         {recentTILs.length > 0 ? (
@@ -25,7 +25,7 @@ export const RecentTILsCard = ({ className, ...props }: ComponentProps<typeof Ca
 
       <Button
         label="View All"
-        className="w-full mt-4 text-sm bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md"
+        className="w-full mt-4 text-xs lg:text-lg bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md transition-transform hover:scale-105"
         onClick={() => console.log('View All')}
       />
     </Card>

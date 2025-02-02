@@ -1,49 +1,96 @@
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useAtomValue } from 'jotai'
-import { completedTodosAtom, todayTodosAtom } from '@/store'
+import { useAtom, useAtomValue } from 'jotai'
+import { completedTodosAtom, todayTodosAtom, todosAtom } from '@/store'
+import { Button } from 'primereact/button'
+import { ContextMenu } from 'radix-ui'
 
 export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) => {
   const todayTodos = useAtomValue(todayTodosAtom)
   const completedTodos = useAtomValue(completedTodosAtom)
+  const [_, setTodos] = useAtom(todosAtom)
+
+  const completeTodo = (id: string) => {
+    setTodos((prev) => {
+      return prev.map((todo) => (todo.id === id ? { ...todo, completed: true } : todo))
+    })
+  }
+
+  const deleteTodo = (todoId: string) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== todoId))
+  }
 
   return (
     <div
       {...props}
       className={twMerge(
-        'p-4 bg-zinc-800 border border-white/10 rounded-lg shadow-md hover:bg-zinc-700 transition cursor-pointer flex flex-col',
+        'p-4 bg-zinc-800 border border-white/10 rounded-lg shadow-md transition cursor-pointer flex flex-col',
         className
       )}
-      onClick={() => console.log('Clicked')}
     >
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold text-white">Today&apos;s Todos</h3>
-        <span className="text-sm text-gray-400">
-          {completedTodos.length}/{todayTodos.length} Done
-        </span>
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+        <h3 className="text-md lg:text-lg font-semibold text-white ">Today&apos;s Todos</h3>
+        <div className="flex flex-col items-start mt-2 mb-2 lg:mt-0 lg:mb-0">
+          <span className="text-xs lg:text-sm text-gray-400">
+            {completedTodos.length}/{todayTodos.length} Done
+          </span>
+          <p className="mt-auto text-gray-400 text-xs lg:text-sm ">
+            {completedTodos.length < todayTodos.length
+              ? 'Keep going! Finish your tasks.'
+              : 'No todos for today!'}
+          </p>
+        </div>
       </div>
 
       <ul>
         {todayTodos.map((todo) => (
-          <li key={todo.id} className="mt-2 flex items-center">
-            <span
-              className={twMerge(
-                'rounded-full w-3 h-3 mr-2',
-                todo.completed ? 'bg-green-500' : 'bg-red-500'
-              )}
-            />
-            <span className={todo.completed ? 'line-through text-gray-300' : 'text-white'}>
-              {todo.title}
-            </span>
-          </li>
+          <ContextMenu.Root key={todo.id}>
+            <ContextMenu.Trigger asChild>
+              <div className="mt-2 h-10 border border-zinc-700/70 rounded-md transition-transform hover:scale-105 flex items-center px-2 cursor-pointer">
+                <span
+                  className={twMerge(
+                    'rounded-full w-3 h-3 mr-2',
+                    todo.completed ? 'bg-green-500' : 'bg-red-500'
+                  )}
+                />
+                <span
+                  className={
+                    todo.completed
+                      ? 'line-through text-gray-300 text-xs lg:text-lg'
+                      : 'text-white text-xs lg:text-lg'
+                  }
+                >
+                  {todo.title}
+                </span>
+              </div>
+            </ContextMenu.Trigger>
+
+            {/* Context Menu */}
+            <ContextMenu.Portal>
+              <ContextMenu.Content className="bg-zinc-900/40 border border-zinc-400 text-white p-2 rounded-md shadow-md w-40">
+                <ContextMenu.Item
+                  className="px-3 py-2  rounded-md cursor-pointer"
+                  onClick={() => completeTodo(todo.id)}
+                >
+                  ✅ Complete
+                </ContextMenu.Item>
+                <ContextMenu.Item
+                  className="px-3 py-2 rounded-md cursor-pointer text-red-400"
+                  onClick={() => deleteTodo(todo.id)}
+                >
+                  🗑 Delete
+                </ContextMenu.Item>
+              </ContextMenu.Content>
+            </ContextMenu.Portal>
+          </ContextMenu.Root>
         ))}
       </ul>
 
-      <p className="mt-auto text-gray-400 text-sm ">
-        {completedTodos.length < todayTodos.length
-          ? 'Keep going! Finish your tasks.'
-          : 'No todos for today!'}
-      </p>
+      <Button
+        label="View All Todos"
+        className="mt-auto w-full text-xs lg:text-lg bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md transition-transform hover:scale-105"
+        onClick={() => console.log('View All')}
+      />
     </div>
   )
 }
