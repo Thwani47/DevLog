@@ -10,9 +10,9 @@ export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) =
   const completedTodos = useAtomValue(completedTodosAtom)
   const [_, setTodos] = useAtom(todosAtom)
 
-  const completeTodo = (id: string) => {
+  const toggleTodo = (id: string) => {
     setTodos((prev) => {
-      return prev.map((todo) => (todo.id === id ? { ...todo, completed: true } : todo))
+      return prev.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo))
     })
   }
 
@@ -67,13 +67,22 @@ export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) =
 
             {/* Context Menu */}
             <ContextMenu.Portal>
-              <ContextMenu.Content className="bg-zinc-900/40 border border-zinc-400 text-white p-2 rounded-md shadow-md w-40">
-                <ContextMenu.Item
-                  className="px-3 py-2  rounded-md cursor-pointer"
-                  onClick={() => completeTodo(todo.id)}
-                >
-                  ✅ Complete
-                </ContextMenu.Item>
+              <ContextMenu.Content className="bg-zinc-700/80 border border-zinc-400 text-white p-2 rounded-md shadow-md w-40">
+                {todo.completed === true ? (
+                  <ContextMenu.Item
+                    className="px-3 py-2  rounded-md cursor-pointer"
+                    onClick={() => toggleTodo(todo.id)}
+                  >
+                    🔄 Re-Open
+                  </ContextMenu.Item>
+                ) : (
+                  <ContextMenu.Item
+                    className="px-3 py-2  rounded-md cursor-pointer"
+                    onClick={() => toggleTodo(todo.id)}
+                  >
+                    ✅ Complete
+                  </ContextMenu.Item>
+                )}
                 <ContextMenu.Item
                   className="px-3 py-2 rounded-md cursor-pointer text-red-400"
                   onClick={() => deleteTodo(todo.id)}
