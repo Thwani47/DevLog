@@ -72,21 +72,21 @@ export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) =
               <ContextMenu.Content className="bg-zinc-700/80 border border-zinc-400 text-white p-2 rounded-md shadow-md w-40">
                 {todo.completed === true ? (
                   <ContextMenu.Item
-                    className="px-3 py-2  rounded-md cursor-pointer"
+                    className="px-3 py-2 rounded-md cursor-pointer hover:border hover:border-zinc-400"
                     onClick={() => toggleTodo(todo.id)}
                   >
                     🔄 Re-Open
                   </ContextMenu.Item>
                 ) : (
                   <ContextMenu.Item
-                    className="px-3 py-2  rounded-md cursor-pointer"
+                    className="px-3 py-2  rounded-md cursor-pointer hover:border hover:border-zinc-400"
                     onClick={() => toggleTodo(todo.id)}
                   >
                     ✅ Complete
                   </ContextMenu.Item>
                 )}
                 <ContextMenu.Item
-                  className="px-3 py-2 rounded-md cursor-pointer text-red-400"
+                  className="px-3 py-2 rounded-md cursor-pointer text-red-400 hover:border hover:border-zinc-400"
                   onClick={() => deleteTodo(todo.id)}
                 >
                   🗑 Delete

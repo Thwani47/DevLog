@@ -1,4 +1,4 @@
-import { DASHBOARD_SCREEN } from '@/utils'
+import { TODO_SCREEN } from '@/utils'
 import { atom } from 'jotai'
 
-export const activeSidebarAtom = atom<string>(DASHBOARD_SCREEN)
+export const activeSidebarAtom = atom<string>(TODO_SCREEN)
