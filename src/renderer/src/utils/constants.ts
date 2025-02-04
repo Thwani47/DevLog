@@ -1,0 +1,8 @@
+export const DASHBOARD_SCREEN = 'Dashboard'
+export const CALENDAR_SCREEN = 'Calendar'
+export const TODO_SCREEN = 'Todo'
+export const TIL_SCREEN = 'TIL'
+export const SETTINGS_SCREEN = 'Settings'
+export const BRAGBOARD_SCREEN = 'Bragboard'
+export const GOALS_SCREEN = 'Goals'
+export const JOURNAL_SCREEN = 'Journal'

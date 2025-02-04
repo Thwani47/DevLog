@@ -1,14 +1,16 @@
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useAtom, useAtomValue } from 'jotai'
-import { completedTodosAtom, todayTodosAtom, todosAtom } from '@/store'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { activeSidebarAtom, completedTodosAtom, todayTodosAtom, todosAtom } from '@/store'
 import { Button } from 'primereact/button'
 import { ContextMenu } from 'radix-ui'
+import { TODO_SCREEN } from '@renderer/utils'
 
 export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) => {
   const todayTodos = useAtomValue(todayTodosAtom)
   const completedTodos = useAtomValue(completedTodosAtom)
   const [_, setTodos] = useAtom(todosAtom)
+  const setActiveItem = useSetAtom(activeSidebarAtom)
 
   const toggleTodo = (id: string) => {
     setTodos((prev) => {
@@ -98,7 +100,7 @@ export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) =
       <Button
         label="View All Todos"
         className="mt-auto w-full text-xs lg:text-lg bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md transition-transform hover:scale-105"
-        onClick={() => console.log('View All')}
+        onClick={() => setActiveItem(TODO_SCREEN)}
       />
     </div>
   )

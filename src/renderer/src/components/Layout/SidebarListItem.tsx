@@ -8,17 +8,19 @@ type SidebarListItemProps = ComponentProps<'div'> & {
   icon?: string
   iconColor?: string
   isActive?: boolean
+  screenName: string
 }
 export const SidebarListItem = ({
   label,
   icon,
   iconColor,
+  screenName,
   children,
   className,
   ...props
 }: SidebarListItemProps) => {
   const [isActiveItem, setActiveItem] = useAtom(activeSidebarAtom)
-  const isActive = isActiveItem === label
+  const isActive = isActiveItem === screenName
 
   return (
     <div
@@ -31,7 +33,7 @@ export const SidebarListItem = ({
         className
       )}
       {...props}
-      onClick={() => setActiveItem(label)}
+      onClick={() => setActiveItem(screenName)}
     >
       <div className="flex items-center space-x-2">
         <i className={`pi ${icon}`} style={{ fontSize: '1.5rem', color: iconColor }} />
