@@ -2,12 +2,19 @@ import { TODO_OVERDUE, TODOS_TODAY, TODOS_WEEK } from '@renderer/utils'
 import { SelectButton } from 'primereact/selectbutton'
 import { InputText } from 'primereact/inputtext'
 import { FloatLabel } from 'primereact/floatlabel'
+import { AddTodoDialog } from '@/components'
 import { useState } from 'react'
 import { Button } from 'primereact/button'
 
 export const Todos = () => {
   const [todosFilter, setTodosFilter] = useState<string>(TODOS_TODAY)
   const [todoTitle, setTodoTitle] = useState<string>('')
+  const [visible, setVisible] = useState<boolean>(false)
+
+  const handleCancelAddTodo = () => {
+    setVisible(false)
+    setTodoTitle('')
+  }
 
   return (
     <div className="p-4">
@@ -25,13 +32,13 @@ export const Todos = () => {
               id="todoInput"
               value={todoTitle}
               onChange={(e) => setTodoTitle(e.target.value)}
-              className="h-10 w-full bg-transparent border border-gray-500 text-white focus:border-white focus:ring-0"
+              className="h-10 w-full bg-transparent border border-gray-500 text-white focus:border-white focus:ring-0 px-2"
             />
             <label
               htmlFor="todoInput"
               className="text-gray-200 peer-focus:text-white peer-focus:top-0 peer-focus:text-lg"
             >
-              Add Todo
+              I want to...
             </label>
           </FloatLabel>
           <Button
@@ -40,8 +47,10 @@ export const Todos = () => {
             rounded
             className="bg-[#007ad9] h-10 w-10 mt-2"
             disabled={todoTitle.length === 0}
+            onClick={() => setVisible(true)}
           />
         </div>
+        <AddTodoDialog visible={visible} onHide={handleCancelAddTodo} title={todoTitle} />
       </div>
     </div>
   )
