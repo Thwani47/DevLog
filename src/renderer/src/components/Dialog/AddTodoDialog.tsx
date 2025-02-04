@@ -16,7 +16,7 @@ export const AddTodoDialog = ({ className, visible, title, onHide }: AddTodoDial
       className={twMerge('w-[50vw]', className)}
       onHide={() => onHide(false)}
     >
-      <p>{title}</p>
+      {title ? <h1 className="text-xl font-semibold">{title}</h1> : <h1>No title</h1>}
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima quo, nihil id corporis
         veniam explicabo? Voluptatibus obcaecati temporibus aperiam corrupti dignissimos dolorem
