@@ -22,8 +22,6 @@ export const SidebarListItem = ({
   const [isActiveItem, setActiveItem] = useAtom(activeSidebarAtom)
   const isActive = isActiveItem === screenName
 
-  //TODO: Fix the change in activeItem not updating the main content
-
   return (
     <div
       className={cn(

@@ -35,4 +35,8 @@
   ::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
+
+  .p-dialog .p-dialog-header {
+    @apply bg-[#333];
+  }
 }

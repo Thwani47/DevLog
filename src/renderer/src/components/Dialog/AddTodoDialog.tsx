@@ -1,6 +1,7 @@
 import { Dialog } from 'primereact/dialog'
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { AddTodoForm } from '@/components'
 
 export type AddTodoDialogProps = ComponentProps<typeof Dialog> & {
   title?: string
@@ -14,14 +15,11 @@ export const AddTodoDialog = ({ className, visible, title, onHide }: AddTodoDial
       header="Add Todo"
       visible={visible}
       className={twMerge('w-[50vw]', className)}
+      headerClassName="bg-zinc-800 text-white"
+      contentClassName="bg-zinc-400/90"
       onHide={() => onHide(false)}
     >
-      {title ? <h1 className="text-xl font-semibold">{title}</h1> : <h1>No title</h1>}
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima quo, nihil id corporis
-        veniam explicabo? Voluptatibus obcaecati temporibus aperiam corrupti dignissimos dolorem
-        officiis deleniti optio odit sapiente, est culpa iure?
-      </p>
+      <AddTodoForm title={title} />
     </Dialog>
   )
 }

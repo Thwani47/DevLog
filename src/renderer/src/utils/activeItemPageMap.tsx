@@ -1,5 +1,5 @@
 import { Dashboard, Todos } from '@/pages'
-import { DASHBOARD_SCREEN, TODO_SCREEN } from './constants'
+import { DASHBOARD_SCREEN, TODO_SCREEN } from '@/utils'
 
 export const activeItemPageMap = (activeItem: string) => {
   switch (activeItem) {
