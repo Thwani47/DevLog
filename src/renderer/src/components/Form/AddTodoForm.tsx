@@ -27,7 +27,7 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
 
   return (
     <form
-      className={twMerge('space-y-4 p-4 bg-zinc-800 rounded-lg', className)}
+      className={twMerge('space-y-4 p-4 bg-transparent rounded-lg flex flex-col', className)}
       onSubmit={form.handleSubmit}
     >
       <form.Field name="title">
@@ -38,7 +38,7 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
               onBlur={field.handleBlur}
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
-              className="w-full"
+              className="w-full border border-zinc-900 p-2 rounded-md mb-2"
             />
             <label htmlFor="title">Title</label>
           </FloatLabel>
@@ -53,7 +53,7 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
               onBlur={field.handleBlur}
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
-              className="w-full"
+              className="w-full border border-zinc-900 p-2 rounded-md mb-4"
               separator=","
             />
             <label htmlFor="tags">Tags (comma-separated)</label>
@@ -69,7 +69,7 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
               onBlur={field.handleBlur}
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
-              className="w-full"
+              className="w-full border border-zinc-900 p-2 rounded-md mb-2 "
               dateFormat="dd/mm/yy"
               showIcon
             />
@@ -87,53 +87,18 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
               rows={4}
-              className="w-full"
+              className="w-full border border-zinc-900 p-2 rounded-md mb-2"
             />
             <label htmlFor="description">Description</label>
           </FloatLabel>
         )}
       </form.Field>
 
-      {/* Submit Button */}
-      <Button label="Submit" type="submit" className="w-full bg-blue-600" />
+      <Button
+        label="Submit"
+        type="submit"
+        className="w-24 h-8 rounded-md text-white bg-[#007ad9] m-auto"
+      />
     </form>
   )
 }
-// export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
-//   const form = useForm({
-//     defaultValues: {
-//       title: title || ''
-//     },
-//     onSubmit: async ({ value }) => {
-//       console.log(value)
-//     }
-//   })
-
-//   return (
-//     <form
-//       className={twMerge('', className)}
-//       onSubmit={(e) => {
-//         e.preventDefault()
-//         e.stopPropagation()
-//         form.handleSubmit()
-//       }}
-//     >
-//       <div className="flex flex-col space-y-4 p-4">
-//         <form.Field name="title">
-//           {(field) => (
-//             <FloatLabel>
-//               <InputText
-//                 id="title"
-//                 onBlur={field.handleBlur}
-//                 value={field.state.value}
-//                 onChange={(e) => field.handleChange(e.target.value)}
-//               />
-//               <label htmlFor="title">Title</label>
-//             </FloatLabel>
-//           )}
-//         </form.Field>
-//         <Button label="Submit" type="submit" />
-//       </div>
-//     </form>
-//   )
-// }

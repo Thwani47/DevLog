@@ -16,7 +16,7 @@ export const AddTodoDialog = ({ className, visible, title, onHide }: AddTodoDial
       visible={visible}
       className={twMerge('w-[50vw]', className)}
       headerClassName="bg-zinc-800 text-white"
-      contentClassName="bg-zinc-400/90"
+      contentClassName="bg-white"
       onHide={() => onHide(false)}
     >
       <AddTodoForm title={title} />
