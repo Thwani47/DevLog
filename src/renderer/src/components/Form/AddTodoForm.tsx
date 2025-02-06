@@ -16,8 +16,8 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
   const form = useForm({
     defaultValues: {
       title: title || '',
-      tags: [],
-      dueDate: null,
+      tags: [] as string[],
+      dueDate: null as Date | null,
       description: ''
     },
     onSubmit: async (values) => {
@@ -28,7 +28,10 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
   return (
     <form
       className={twMerge('space-y-4 p-4 bg-transparent rounded-lg flex flex-col', className)}
-      onSubmit={form.handleSubmit}
+      onSubmit={(e) => {
+        e.preventDefault()
+        form.handleSubmit()
+      }}
     >
       <form.Field name="title">
         {(field) => (
@@ -51,12 +54,17 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
             <Chips
               id="tags"
               onBlur={field.handleBlur}
-              value={field.state.value}
-              onChange={(e) => field.handleChange(e.target.value)}
+              value={field.state.value ?? []}
+              onChange={(e) => {
+                if (e.value!.length <= 3) {
+                  field.handleChange(e.target.value ?? [])
+                }
+              }}
               className="w-full border border-zinc-900 p-2 rounded-md mb-4"
               separator=","
+              max={3}
             />
-            <label htmlFor="tags">Tags (comma-separated)</label>
+            <label htmlFor="tags">Tags (max 3)</label>
           </FloatLabel>
         )}
       </form.Field>
@@ -68,7 +76,7 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
               id="dueDate"
               onBlur={field.handleBlur}
               value={field.state.value}
-              onChange={(e) => field.handleChange(e.target.value)}
+              onChange={(e) => field.handleChange(e.target.value || null)}
               className="w-full border border-zinc-900 p-2 rounded-md mb-2 "
               dateFormat="dd/mm/yy"
               showIcon
@@ -97,7 +105,7 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
       <Button
         label="Submit"
         type="submit"
-        className="w-24 h-8 rounded-md text-white bg-[#007ad9] m-auto"
+        className="w-24 h-8 rounded-md text-white bg-[#007ad9] m-auto hover:transition-all hover:scale-105"
       />
     </form>
   )
