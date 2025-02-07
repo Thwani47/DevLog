@@ -7,12 +7,19 @@ import { Chips } from 'primereact/chips'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Todo } from '@shared/types'
+import { v4 as uuidv4 } from 'uuid'
+import { useAtom, useSetAtom } from 'jotai'
+import { todosAtom } from '@renderer/store'
 
 type AddTodoFormProps = ComponentProps<'form'> & {
   title?: string
+  onFormSubmit: () => void
 }
 
-export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
+export const AddTodoForm = ({ className, title, onFormSubmit }: AddTodoFormProps) => {
+  const [todos, setAtoms] = useAtom(todosAtom)
+  console.log(todos)
   const form = useForm({
     defaultValues: {
       title: title || '',
@@ -21,7 +28,19 @@ export const AddTodoForm = ({ className, title }: AddTodoFormProps) => {
       description: ''
     },
     onSubmit: async (values) => {
-      console.log(values)
+      const { title, description, dueDate, tags } = values.value
+      const newTodo: Todo = {
+        id: uuidv4(),
+        title,
+        description,
+        completed: false,
+        dueDate: dueDate!,
+        dateCreated: new Date(),
+        tags
+      }
+      setAtoms((prev) => [...prev, newTodo])
+      console.log(todos)
+      // onFormSubmit()
     }
   })
 

@@ -19,7 +19,7 @@ export const AddTodoDialog = ({ className, visible, title, onHide }: AddTodoDial
       contentClassName="bg-white"
       onHide={() => onHide(false)}
     >
-      <AddTodoForm title={title} />
+      <AddTodoForm title={title} onFormSubmit={onHide} />
     </Dialog>
   )
 }

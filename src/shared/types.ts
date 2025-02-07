@@ -2,7 +2,10 @@ export interface Todo {
   id: string
   title: string
   completed: boolean
-  date: string
+  dueDate: Date
+  dateCreated: Date
+  tags?: string[]
+  description?: string
 }
 
 export interface TIL {

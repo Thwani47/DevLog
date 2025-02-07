@@ -1,21 +1,14 @@
 import { atom } from 'jotai'
 import { Todo } from '@shared/types'
 
-export const todosAtom = atom<Todo[]>([
-  { id: '1', title: 'Fix UI bug', completed: true, date: new Date().toISOString().split('T')[0] },
-  {
-    id: '2',
-    title: 'Write unit tests',
-    completed: false,
-    date: new Date().toISOString().split('T')[0]
-  }
-])
+export const todosAtom = atom<Todo[]>([])
 
 export const todayTodosAtom = atom((get) => {
   const todos = get(todosAtom)
   const today = new Date().toISOString().split('T')[0]
+  console.log(today)
 
-  return todos.filter((todo) => todo.date === today)
+  return todos.filter((todo) => todo.dueDate.toISOString().split('T')[0] === today)
 })
 
 export const completedTodosAtom = atom((get) => {
