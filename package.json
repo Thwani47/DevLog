@@ -29,6 +29,7 @@
     "dayjs": "^1.11.13",
     "electron-updater": "^6.1.7",
     "jotai": "^2.11.1",
+    "pouchdb": "^9.0.0",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.2",
     "radix-ui": "^1.1.2",

@@ -9,7 +9,7 @@ import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Todo } from '@shared/types'
 import { v4 as uuidv4 } from 'uuid'
-import { useAtom, useSetAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import { todosAtom } from '@renderer/store'
 
 type AddTodoFormProps = ComponentProps<'form'> & {
@@ -39,7 +39,6 @@ export const AddTodoForm = ({ className, title, onFormSubmit }: AddTodoFormProps
         tags
       }
       setAtoms((prev) => [...prev, newTodo])
-      console.log(todos)
       // onFormSubmit()
     }
   })
