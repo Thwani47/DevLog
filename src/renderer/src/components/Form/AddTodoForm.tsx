@@ -39,7 +39,7 @@ export const AddTodoForm = ({ className, title, onFormSubmit }: AddTodoFormProps
         tags
       }
       setAtoms((prev) => [...prev, newTodo])
-      // onFormSubmit()
+      onFormSubmit()
     }
   })
 

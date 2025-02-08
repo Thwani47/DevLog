@@ -2,8 +2,8 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { GetTodos } from '@shared/types'
-import { getTodos } from '@/lib'
+import { AddTodo, GetTodos } from '@shared/types'
+import { addTodo, getTodos } from '@/lib'
 
 function createWindow(): void {
   // Create the browser window.
@@ -58,7 +58,8 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  ipcMain.handle('addTodos', (_, ...args: Parameters<GetTodos>) => getTodos(...args))
+  ipcMain.handle('getTodos', (_, ...args: Parameters<GetTodos>) => getTodos(...args))
+  ipcMain.handle('addTodo', (_, ...args: Parameters<AddTodo>) => addTodo(...args))
 
   createWindow()
 

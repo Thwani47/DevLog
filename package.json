@@ -28,6 +28,7 @@
     "@tanstack/zod-form-adapter": "^0.41.3",
     "dayjs": "^1.11.13",
     "electron-updater": "^6.1.7",
+    "fs-extra": "^11.3.0",
     "jotai": "^2.11.1",
     "pouchdb": "^9.0.0",
     "primeicons": "^7.0.0",
