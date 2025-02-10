@@ -4,7 +4,9 @@ import PouchDB from 'pouchdb'
 import { ensureDir } from 'fs-extra'
 import { AddTodo, GetTodos } from '@shared/types'
 
-const todosDb = new PouchDB('todos')
+const todosDb = new PouchDB('todos', {
+  prefix: `${homedir()}/${APP_DIRECTORY_NAME}/`
+})
 
 export const getRootDir = () => {
   return `${homedir()}/${APP_DIRECTORY_NAME}`
@@ -18,6 +20,5 @@ export const getTodos: GetTodos = async () => {
 
 export const addTodo: AddTodo = async (todo) => {
   const result = await todosDb.put(todo)
-  console.log(result)
   return { ...todo, _id: result.id, _rev: result.rev }
 }

@@ -34,7 +34,7 @@ export const addTodoAtom = atom(null, async (get, set, todo: Todo) => {
   try {
     const savedTodo = await window.context.addTodo(todo)
 
-    set(todosAtom, (prevTodos) => [savedTodo])
+    set(todosAtom, (prevTodos) => [...prevTodos, savedTodo])
   } catch (error) {
     console.error('Failed to add todo:', error)
   }
