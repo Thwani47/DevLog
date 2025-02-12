@@ -15,6 +15,8 @@ export const todayTodosAtom = atom((get) => {
   const todos = get(todosAtom)
   const today = new Date().toISOString().split('T')[0]
 
+  console.log(todos)
+
   if (!todos) {
     return []
   }
