@@ -11,6 +11,7 @@ import { Todo } from '@shared/models'
 import { v4 as uuidv4 } from 'uuid'
 import { useSetAtom } from 'jotai'
 import { addTodoAtom } from '@renderer/store'
+import dayjs from 'dayjs'
 
 type AddTodoFormProps = ComponentProps<'form'> & {
   title?: string
@@ -33,7 +34,9 @@ export const AddTodoForm = ({ className, title, onFormSubmit }: AddTodoFormProps
         title,
         description,
         completed: false,
-        dueDate: dueDate!,
+        dueDate: dayjs(dueDate ? new Date(dueDate) : new Date())
+          .add(1, 'hour')
+          .toDate(),
         dateCreated: new Date(),
         tags
       }

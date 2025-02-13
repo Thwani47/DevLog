@@ -46,7 +46,7 @@ export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) =
 
       <ul>
         {todayTodos.map((todo) => (
-          <ContextMenu.Root key={todo.id}>
+          <ContextMenu.Root key={todo._id}>
             <ContextMenu.Trigger asChild>
               <div className="mt-2 h-10 border border-zinc-700/70 rounded-md transition-transform hover:scale-105 flex items-center px-2 cursor-pointer">
                 <span
