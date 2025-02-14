@@ -1,25 +1,33 @@
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { activeSidebarAtom, completedTodosAtom, todayTodosAtom, todosAtom } from '@/store'
+import { useAtomValue, useSetAtom } from 'jotai'
+import {
+  activeSidebarAtom,
+  completedTodosAtom,
+  deleteTodoAtom,
+  editTodoAtom,
+  todayTodosAtom
+} from '@/store'
 import { Button } from 'primereact/button'
 import { ContextMenu } from 'radix-ui'
 import { TODO_SCREEN } from '@renderer/utils'
+import { Todo } from '@shared/models'
 
 export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) => {
   const todayTodos = useAtomValue(todayTodosAtom)
   const completedTodos = useAtomValue(completedTodosAtom)
-  const [_, setTodos] = useAtom(todosAtom)
+  const editTodo = useSetAtom(editTodoAtom)
+  const deleteTodo = useSetAtom(deleteTodoAtom)
+
   const setActiveItem = useSetAtom(activeSidebarAtom)
 
-  const toggleTodo = (id: string) => {
-    setTodos((prev) => {
-      return prev.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo))
-    })
+  const toggleTodo = (todo: Todo) => {
+    todo.completed = !todo.completed
+    editTodo(todo)
   }
 
-  const deleteTodo = (todoId: string) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== todoId))
+  const handleDelete = (todo: Todo) => {
+    deleteTodo(todo)
   }
 
   return (
@@ -73,21 +81,21 @@ export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) =
                 {todo.completed === true ? (
                   <ContextMenu.Item
                     className="px-3 py-2 rounded-md cursor-pointer hover:border hover:border-zinc-400"
-                    onClick={() => toggleTodo(todo.id)}
+                    onClick={() => toggleTodo(todo)}
                   >
                     🔄 Re-Open
                   </ContextMenu.Item>
                 ) : (
                   <ContextMenu.Item
                     className="px-3 py-2  rounded-md cursor-pointer hover:border hover:border-zinc-400"
-                    onClick={() => toggleTodo(todo.id)}
+                    onClick={() => toggleTodo(todo)}
                   >
                     ✅ Complete
                   </ContextMenu.Item>
                 )}
                 <ContextMenu.Item
                   className="px-3 py-2 rounded-md cursor-pointer text-red-400 hover:border hover:border-zinc-400"
-                  onClick={() => deleteTodo(todo.id)}
+                  onClick={() => handleDelete(todo)}
                 >
                   🗑 Delete
                 </ContextMenu.Item>

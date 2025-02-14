@@ -1,4 +1,4 @@
-import { AddTodo, GetTodos } from '@shared/types'
+import { AddTodo, DeleteTodo, EditTodo, GetTodos } from '@shared/types'
 
 declare global {
   interface Window {
@@ -6,6 +6,8 @@ declare global {
       locale: string
       getTodos: GetTodos
       addTodo: AddTodo
+      editTodo: EditTodo
+      deleteTodo: DeleteTodo
     }
   }
 }

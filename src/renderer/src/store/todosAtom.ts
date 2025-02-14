@@ -19,9 +19,14 @@ export const todayTodosAtom = atom((get) => {
     return []
   }
 
-  return todos.filter(
+  const todaysTodos = todos.filter(
     (todo) => new Date(todo.dueDate).toLocaleDateString('en-ZA').split('T')[0] === today
   )
+
+  // sort the todos by date created in descending order
+  const sortedTodos = todaysTodos.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
+
+  return sortedTodos.slice(0, 3) // take the first 3 todos
 })
 
 export const completedTodosAtom = atom((get) => {
@@ -34,7 +39,6 @@ export const completedTodosAtom = atom((get) => {
 
 export const addTodoAtom = atom(null, async (get, set, todo: Todo) => {
   try {
-    console.log('Adding todo:', todo)
     const savedTodo = await window.context.addTodo(todo)
 
     const prevTodos = await get(todosAtomAsync)
@@ -42,5 +46,39 @@ export const addTodoAtom = atom(null, async (get, set, todo: Todo) => {
     set(todosAtom, [...prevTodos, savedTodo])
   } catch (error) {
     console.error('Failed to add todo:', error)
+  }
+})
+
+export const editTodoAtom = atom(null, async (get, set, todo: Todo) => {
+  try {
+    const isEdited = await window.context.editTodo(todo)
+
+    if (isEdited) {
+      const prevTodos = await get(todosAtomAsync)
+
+      set(
+        todosAtom,
+        prevTodos.map((prevTodo) => (prevTodo._id === todo._id ? todo : prevTodo))
+      )
+    }
+  } catch (error) {
+    console.error('Failed to edit todo:', error)
+  }
+})
+
+export const deleteTodoAtom = atom(null, async (get, set, todo: Todo) => {
+  try {
+    const isDeleted = await window.context.deleteTodo(todo)
+
+    if (isDeleted) {
+      const prevTodos = await get(todosAtomAsync)
+
+      set(
+        todosAtom,
+        prevTodos.filter((prevTodo) => prevTodo._id !== todo._id)
+      )
+    }
+  } catch (error) {
+    console.error('Failed to delete todo:', error)
   }
 })
