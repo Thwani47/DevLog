@@ -5,6 +5,7 @@ import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
 import { Chips } from 'primereact/chips'
 import { InputTextarea } from 'primereact/inputtextarea'
+import { Dropdown } from 'primereact/dropdown'
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Todo } from '@shared/models'
@@ -12,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useSetAtom } from 'jotai'
 import { addTodoAtom } from '@renderer/store'
 import dayjs from 'dayjs'
+import { TODO_PRIORITY_HIGH, TODO_PRIORITY_LOW, TODO_PRIORITY_MEDIUM } from '@renderer/utils'
 
 type AddTodoFormProps = ComponentProps<'form'> & {
   title?: string
@@ -25,14 +27,16 @@ export const AddTodoForm = ({ className, title, onFormSubmit }: AddTodoFormProps
       title: title || '',
       tags: [] as string[],
       dueDate: null as Date | null,
-      description: ''
+      description: '',
+      priority: ''
     },
     onSubmit: async (values) => {
-      const { title, description, dueDate, tags } = values.value
+      const { title, description, dueDate, tags, priority } = values.value
       const newTodo: Todo = {
         _id: uuidv4(),
         title,
         description,
+        priority,
         completed: false,
         dueDate: dayjs(dueDate ? new Date(dueDate) : new Date())
           .add(1, 'hour')
@@ -118,6 +122,23 @@ export const AddTodoForm = ({ className, title, onFormSubmit }: AddTodoFormProps
               className="w-full border border-zinc-900 p-2 rounded-md mb-2"
             />
             <label htmlFor="description">Description</label>
+          </FloatLabel>
+        )}
+      </form.Field>
+
+      <form.Field name="priority">
+        {(field) => (
+          <FloatLabel>
+            <Dropdown
+              id="priority"
+              onBlur={field.handleBlur}
+              value={field.state.value}
+              options={[TODO_PRIORITY_LOW, TODO_PRIORITY_MEDIUM, TODO_PRIORITY_HIGH]}
+              onChange={(e) => field.handleChange(e.value)}
+              placeholder="Select a Priority"
+              className="w-full border border-zinc-900 p-2 rounded-md mb-2"
+            />
+            <label htmlFor="priority">Priority</label>
           </FloatLabel>
         )}
       </form.Field>

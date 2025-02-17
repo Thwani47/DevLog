@@ -1,3 +1,4 @@
+import { activeItemPageMap } from '@/utils'
 import { ComponentProps, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
@@ -26,10 +27,14 @@ export const Sidebar = ({ children, className, ...props }: ComponentProps<'aside
   )
 }
 
-export const Content = forwardRef<HTMLDivElement, ComponentProps<'div'>>(
-  ({ children, className, ...props }, ref) => (
+type ContentProps = ComponentProps<'div'> & {
+  screenName: string
+}
+
+export const Content = forwardRef<HTMLDivElement, ContentProps>(
+  ({ children, className, screenName, ...props }, ref) => (
     <div ref={ref} className={twMerge('flex-1 overflow-auto', className)} {...props}>
-      {children}
+      {activeItemPageMap(screenName)}
     </div>
   )
 )

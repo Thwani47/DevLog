@@ -13,11 +13,12 @@ export const todosAtom = unwrap(todosAtomAsync, (prev) => prev)
 
 export const todayTodosAtom = atom((get) => {
   const todos = get(todosAtom)
-  const today = new Date().toLocaleDateString('en-ZA').split('T')[0]
 
   if (!todos) {
     return []
   }
+
+  const today = new Date().toLocaleDateString('en-ZA').split('T')[0]
 
   const todaysTodos = todos.filter(
     (todo) => new Date(todo.dueDate).toLocaleDateString('en-ZA').split('T')[0] === today
@@ -27,6 +28,36 @@ export const todayTodosAtom = atom((get) => {
   const sortedTodos = todaysTodos.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
 
   return sortedTodos.slice(0, 3) // take the first 3 todos
+})
+
+export const allTodosAtom = atom((get) => {
+  const todos = get(todosAtom)
+
+  if (!todos) {
+    return []
+  }
+
+  return todos
+})
+
+export const overdueTodosAtom = atom((get) => {
+  const todos = get(todosAtom)
+
+  if (!todos) {
+    return []
+  }
+
+  const today = new Date().toLocaleDateString('en-ZA').split('T')[0]
+
+  const overdueTodos = todos.filter(
+    (todo) =>
+      new Date(todo.dueDate).toLocaleDateString('en-ZA').split('T')[0] < today && !todo.completed
+  )
+
+  // sort the todos by date created in descending order
+  const sortedTodos = overdueTodos.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
+
+  return sortedTodos
 })
 
 export const completedTodosAtom = atom((get) => {

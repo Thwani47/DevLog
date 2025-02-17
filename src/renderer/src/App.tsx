@@ -17,13 +17,11 @@ import {
   JOURNAL_SCREEN,
   SETTINGS_SCREEN,
   TIL_SCREEN,
-  TODO_SCREEN,
-  activeItemPageMap
+  TODO_SCREEN
 } from './utils'
 
 function App(): JSX.Element {
   const activeItem = useAtomValue(activeSidebarAtom)
-  // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
   const contentContainerRef = useRef<HTMLDivElement>(null)
 
   return (
@@ -85,11 +83,10 @@ function App(): JSX.Element {
         </Sidebar>
         <Content
           key={activeItem}
+          screenName={activeItem}
           ref={contentContainerRef}
           className="border-l bg-zinc-900/50 border-l-white/20"
-        >
-          {activeItemPageMap(activeItem)}
-        </Content>
+        />
       </Layout>
     </>
   )

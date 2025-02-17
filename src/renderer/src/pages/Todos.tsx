@@ -1,15 +1,27 @@
-import { TODO_OVERDUE, TODOS_TODAY, TODOS_WEEK } from '@renderer/utils'
+import {
+  TODO_OVERDUE,
+  TODO_PRIORITY_HIGH,
+  TODO_PRIORITY_LOW,
+  TODO_PRIORITY_MEDIUM,
+  TODOS_TODAY,
+  TODOS_WEEK
+} from '@renderer/utils'
 import { SelectButton } from 'primereact/selectbutton'
 import { InputText } from 'primereact/inputtext'
 import { FloatLabel } from 'primereact/floatlabel'
-import { AddTodoDialog } from '@/components'
+import { RadioButton } from 'primereact/radiobutton'
+import { AddTodoDialog, TodoList } from '@/components'
 import { useState } from 'react'
 import { Button } from 'primereact/button'
+import { useAtomValue } from 'jotai'
+import { allTodosAtom } from '@renderer/store'
 
 export const Todos = () => {
   const [todosFilter, setTodosFilter] = useState<string>(TODOS_TODAY)
   const [todoTitle, setTodoTitle] = useState<string>('')
   const [visible, setVisible] = useState<boolean>(false)
+  const [todoPriority, setTodoPriority] = useState<string>(TODO_PRIORITY_HIGH)
+  const todos = useAtomValue(allTodosAtom)
 
   const handleCancelAddTodo = () => {
     setVisible(false)
@@ -51,6 +63,51 @@ export const Todos = () => {
           />
         </div>
         <AddTodoDialog visible={visible} onHide={handleCancelAddTodo} title={todoTitle} />
+      </div>
+      <div className="px-4">
+        <div className="mt-2">
+          <div className="flex flex-wrap gap-3">
+            <div className="flex align-items-center">
+              <RadioButton
+                inputId="priorityHigh"
+                name="high"
+                value={TODO_PRIORITY_HIGH}
+                onChange={(e) => setTodoPriority(e.value)}
+                checked={todoPriority === TODO_PRIORITY_HIGH}
+              />
+              <label htmlFor="priorityHigh" className="ml-2">
+                High
+              </label>
+            </div>
+
+            <div className="flex align-items-center">
+              <RadioButton
+                inputId="priorityMedium"
+                name="medium"
+                value={TODO_PRIORITY_MEDIUM}
+                onChange={(e) => setTodoPriority(e.value)}
+                checked={todoPriority === TODO_PRIORITY_MEDIUM}
+              />
+              <label htmlFor="priorityMedium" className="ml-2">
+                Medium
+              </label>
+            </div>
+
+            <div className="flex align-items-center">
+              <RadioButton
+                inputId="priorityLow"
+                name="low"
+                value={TODO_PRIORITY_LOW}
+                onChange={(e) => setTodoPriority(e.value)}
+                checked={todoPriority === TODO_PRIORITY_LOW}
+              />
+              <label htmlFor="priorityLow" className="ml-2">
+                Low
+              </label>
+            </div>
+          </div>
+          <TodoList todos={todos} priority={todoPriority} filter={todosFilter} />
+        </div>
       </div>
     </div>
   )
