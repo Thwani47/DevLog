@@ -37,7 +37,7 @@ export const allTodosAtom = atom((get) => {
     return []
   }
 
-  return todos
+  return todos.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
 })
 
 export const overdueTodosAtom = atom((get) => {
