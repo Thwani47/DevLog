@@ -30,7 +30,6 @@ export const getTodos: GetTodos = async () => {
         completed: doc.completed ?? false,
         dueDate: doc.dueDate ? new Date(doc.dueDate) : null,
         dateCreated: doc.dateCreated ? new Date(doc.dateCreated) : null,
-        priority: doc.priority ?? '',
         tags: doc.tags ?? [],
         description: doc.description ?? ''
       } as Todo

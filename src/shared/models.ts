@@ -4,7 +4,6 @@ export interface Todo {
   completed: boolean
   dueDate: Date
   dateCreated: Date
-  priority: string
   tags?: string[]
   description?: string
 }

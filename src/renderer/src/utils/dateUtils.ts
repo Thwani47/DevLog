@@ -4,6 +4,7 @@ export type DueDateFormat = {
   text: string
   color: string
 }
+
 export const formatDueDate = (date: Date): DueDateFormat => {
   const today = new Date()
 
@@ -20,4 +21,12 @@ export const formatDueDate = (date: Date): DueDateFormat => {
 
     return { text: `Due ${formattedDate}`, color }
   }
+}
+
+export const getTodayLocale = (): string => {
+  return toLocaleDateString(new Date())
+}
+
+export const toLocaleDateString = (date: Date): string => {
+  return date.toLocaleDateString('en-ZA').split('T')[0]
 }

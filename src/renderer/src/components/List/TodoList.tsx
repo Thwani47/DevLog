@@ -1,21 +1,42 @@
-import { formatDueDate } from '@/utils'
+import { formatDueDate, TODO_OVERDUE, TODOS_TODAY, TODOS_WEEK } from '@/utils'
 import { editTodoAtom } from '@renderer/store'
 import { Todo } from '@shared/models'
+import dayjs from 'dayjs'
+import isBetween from 'dayjs/plugin/isBetween'
 import { useSetAtom } from 'jotai'
 import { ComponentProps } from 'react'
 
+dayjs.extend(isBetween)
+
 export type TodoListProps = ComponentProps<'div'> & {
   todos: Todo[]
-  priority: string
   filter: string
 }
-export const TodoList = ({ className, todos, priority, filter, ...props }: TodoListProps) => {
+export const TodoList = ({ className, todos, filter, ...props }: TodoListProps) => {
   const editTodo = useSetAtom(editTodoAtom)
+  const today = dayjs().startOf('day')
+  const weekStart = today.startOf('week')
+  const weekEnd = today.endOf('week')
+
   return (
     <div className={className} {...props}>
       <div className="mt-4">
         {todos
-          .filter((todo) => todo.priority === priority)
+          .filter((todo) => {
+            const dueDate = dayjs(todo.dueDate).startOf('day')
+
+            if (filter === TODOS_TODAY) {
+              return dueDate.isSame(today, 'day')
+            } else if (filter === TODOS_WEEK) {
+              return dueDate.isBetween(weekStart, weekEnd, 'day', '[]')
+            } else if (filter === TODO_OVERDUE) {
+              return dueDate.isBefore(today, 'day') && !todo.completed
+            }
+
+            return true
+          })
+          .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime())
+          .sort((a, b) => (a.completed === b.completed ? 0 : a.completed ? 1 : -1))
           .map((todo) => {
             const { text, color } = formatDueDate(todo.dueDate)
             return (

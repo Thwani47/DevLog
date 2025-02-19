@@ -1,6 +1,7 @@
 import { atom } from 'jotai'
 import { unwrap } from 'jotai/utils'
 import { Todo } from '@shared/models'
+import { getTodayLocale } from '@/utils'
 
 const getTodos = async () => {
   const todos = await window.context.getTodos()
@@ -18,7 +19,7 @@ export const todayTodosAtom = atom((get) => {
     return []
   }
 
-  const today = new Date().toLocaleDateString('en-ZA').split('T')[0]
+  const today = getTodayLocale()
 
   const todaysTodos = todos.filter(
     (todo) => new Date(todo.dueDate).toLocaleDateString('en-ZA').split('T')[0] === today
@@ -47,7 +48,7 @@ export const overdueTodosAtom = atom((get) => {
     return []
   }
 
-  const today = new Date().toLocaleDateString('en-ZA').split('T')[0]
+  const today = getTodayLocale()
 
   const overdueTodos = todos.filter(
     (todo) =>
