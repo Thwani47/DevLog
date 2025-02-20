@@ -6,9 +6,7 @@ import {
   SidebarList,
   SidebarListItem
 } from '@/components'
-import { useAtomValue } from 'jotai'
 import { useRef } from 'react'
-import { activeSidebarAtom } from '@/store'
 import {
   BRAGBOARD_SCREEN,
   CALENDAR_SCREEN,
@@ -21,7 +19,6 @@ import {
 } from './utils'
 
 function App(): JSX.Element {
-  const activeItem = useAtomValue(activeSidebarAtom)
   const contentContainerRef = useRef<HTMLDivElement>(null)
 
   return (
@@ -81,12 +78,7 @@ function App(): JSX.Element {
             />
           </SidebarList>
         </Sidebar>
-        <Content
-          key={activeItem}
-          screenName={activeItem}
-          ref={contentContainerRef}
-          className="border-l bg-zinc-900/50 border-l-white/20"
-        />
+        <Content ref={contentContainerRef} className="border-l bg-zinc-900/50 border-l-white/20" />
       </Layout>
     </>
   )

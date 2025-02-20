@@ -61,7 +61,9 @@ export const TodoList = ({ className, todos, filter, ...props }: TodoListProps) 
           )
         })}
       </div>
-      {uncompletedTodos.length > 0 && <hr className={`mt-2 mb-2 border-t border-zinc-500`} />}
+      {uncompletedTodos.length > 0 && completedTodos.length > 0 && (
+        <hr className={`mt-2 mb-2 border-t border-zinc-500`} />
+      )}
       <div className="mt-4">
         {completedTodos.map((todo) => {
           const { text, color } = formatDueDate(todo.dueDate)

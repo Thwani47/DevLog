@@ -1,4 +1,6 @@
 import { activeItemPageMap } from '@/utils'
+import { activeSidebarAtom } from '@/store'
+import { useAtomValue } from 'jotai'
 import { ComponentProps, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
@@ -27,16 +29,17 @@ export const Sidebar = ({ children, className, ...props }: ComponentProps<'aside
   )
 }
 
-type ContentProps = ComponentProps<'div'> & {
-  screenName: string
-}
+type ContentProps = ComponentProps<'div'>
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
-  ({ children, className, screenName, ...props }, ref) => (
-    <div ref={ref} className={twMerge('flex-1 overflow-auto', className)} {...props}>
-      {activeItemPageMap(screenName)}
-    </div>
-  )
+  ({ children, className, ...props }, ref) => {
+    const activeItem = useAtomValue(activeSidebarAtom)
+    return (
+      <div ref={ref} className={twMerge('flex-1 overflow-auto', className)} {...props}>
+        {activeItemPageMap(activeItem)}
+      </div>
+    )
+  }
 )
 
 Content.displayName = 'Content'
