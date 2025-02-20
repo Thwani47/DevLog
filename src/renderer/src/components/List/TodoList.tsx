@@ -49,7 +49,7 @@ export const TodoList = ({ className, todos, filter, ...props }: TodoListProps) 
             >
               <div className="flex flex-row items-center space-x-2">
                 <div
-                  className={`h-10 w-10 rounded-full border border-zinc-600/50 ${todo.completed ? 'bg-green-500/70' : 'bg-zinc-500/10'}`}
+                  className={`h-10 w-10 rounded-full border border-zinc-600/50 ${todo.completed ? 'bg-green-500/70' : 'bg-red-500/70'}`}
                   onClick={() => editTodo({ ...todo, completed: !todo.completed })}
                 ></div>
                 <p className={todo.completed ? 'line-through' : ''}>{todo.title}</p>

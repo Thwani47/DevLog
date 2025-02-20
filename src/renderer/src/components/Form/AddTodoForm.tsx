@@ -95,6 +95,7 @@ export const AddTodoForm = ({ className, title, onFormSubmit }: AddTodoFormProps
           <FloatLabel>
             <Calendar
               id="dueDate"
+              minDate={new Date()}
               onBlur={field.handleBlur}
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value || null)}

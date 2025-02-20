@@ -52,6 +52,7 @@ export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) =
             <ContextMenu.Trigger asChild>
               <div className="mt-2 h-10 border border-zinc-700/70 rounded-md transition-transform hover:scale-105 flex items-center px-2 cursor-pointer">
                 <span
+                  onClick={() => editTodo({ ...todo, completed: !todo.completed })}
                   className={twMerge(
                     'rounded-full w-3 h-3 mr-2',
                     todo.completed ? 'bg-green-500' : 'bg-red-500'
