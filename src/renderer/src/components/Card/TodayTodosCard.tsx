@@ -1,13 +1,7 @@
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useAtomValue, useSetAtom } from 'jotai'
-import {
-  activeSidebarAtom,
-  completedTodosAtom,
-  deleteTodoAtom,
-  editTodoAtom,
-  todayTodosAtom
-} from '@/store'
+import { activeSidebarAtom, deleteTodoAtom, editTodoAtom, todayTodosAtom } from '@/store'
 import { Button } from 'primereact/button'
 import { ContextMenu } from 'radix-ui'
 import { TODO_SCREEN } from '@renderer/utils'
@@ -15,7 +9,7 @@ import { Todo } from '@shared/models'
 
 export const TodayTodosCard = ({ className, ...props }: ComponentProps<'div'>) => {
   const todayTodos = useAtomValue(todayTodosAtom)
-  const completedTodos = useAtomValue(completedTodosAtom)
+  const completedTodos = todayTodos.filter((todo) => todo.completed)
   const editTodo = useSetAtom(editTodoAtom)
   const deleteTodo = useSetAtom(deleteTodoAtom)
 
