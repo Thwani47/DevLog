@@ -1,4 +1,4 @@
-import { TIL } from '@shared/types'
+import { TIL } from '@shared/models'
 import { atom } from 'jotai'
 
 export const recentTilsAtom = atom<TIL[]>([
