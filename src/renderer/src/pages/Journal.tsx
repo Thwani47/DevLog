@@ -1,8 +1,14 @@
 import { StatCard } from '@/components'
 import dayjs from 'dayjs'
+import { Button } from 'primereact/button'
+import { InputTextarea } from 'primereact/inputtextarea'
+import { useState } from 'react'
 
 export const Journal = () => {
   const now = dayjs().format('YYYY-MM-DD')
+  const templates = ["I'm grateful for", 'I feel', 'Weekly recap', 'My top priority today']
+  const [isFocused, setIsFocused] = useState(false)
+
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-8">
@@ -11,10 +17,6 @@ export const Journal = () => {
           <h1 className="text-2xl font-bold">Hi Thwani</h1>
           <p className="">{now}</p>
         </div>
-
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors hover:transition-all hover:scale-105">
-          New Entry
-        </button>
       </div>
       <div className="flex justify-between w-full">
         <StatCard
@@ -29,7 +31,27 @@ export const Journal = () => {
         />
         <StatCard title="Journal Entries" value={<div className="flex items-center">12 📝</div>} />
       </div>
-
+      <div className="mt-8 p-4">
+        <InputTextarea
+          placeholder="What's on your mind?"
+          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 text-black"
+          autoResize
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+        />
+        {isFocused && (
+          <div className="mt-2 flex gap-2">
+            {templates.map((template) => (
+              <Button
+                key={template}
+                label={template}
+                className="p-button-sm p-button-outlined"
+                onClick={() => console.log(template)}
+              />
+            ))}
+          </div>
+        )}
+      </div>
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-4">Recent Entries</h2>
         <div className="space-y-4">
