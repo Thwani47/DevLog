@@ -14,3 +14,8 @@ export interface TIL {
   date: string
   tags?: string[]
 }
+
+export interface EditorTemplate {
+  tritle: string
+  content: string
+}

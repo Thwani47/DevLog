@@ -1,25 +1,14 @@
 import { StatCard, JournalEditor } from '@/components'
+import { journalTemplatesAtom } from '@renderer/store'
 import dayjs from 'dayjs'
+import { useAtomValue } from 'jotai'
 import { Button } from 'primereact/button'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { useState } from 'react'
 
-type EditorTemplate = {
-  title: string
-  content: string
-}
-
 export const Journal = () => {
   const now = dayjs().format('YYYY-MM-DD')
-  const templates: EditorTemplate[] = [
-    {
-      title: 'Blank entry',
-      content: ''
-    },
-    { title: "I'm grateful for", content: "# This is what I'm grateful for" },
-    { title: 'I feel...', content: '# I feel like this...' },
-    { title: 'Weekly recap', content: '# This week has been intersting' }
-  ]
+  const editorTemplates = useAtomValue(journalTemplatesAtom)
   const [isFocused, setIsFocused] = useState(false)
   const [editorInitialContent, setEditorInitialContent] = useState('')
   const [isEditorOpen, setIsEditorOpen] = useState(false)
@@ -65,7 +54,7 @@ export const Journal = () => {
         />
         {isFocused && (
           <div className="mt-2 flex space-x-2">
-            {templates.map((template) => (
+            {editorTemplates.map((template) => (
               <Button
                 key={template.title}
                 label={template.title}
