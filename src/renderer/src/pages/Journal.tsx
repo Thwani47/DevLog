@@ -1,13 +1,32 @@
-import { StatCard } from '@/components'
+import { StatCard, JournalEditor } from '@/components'
 import dayjs from 'dayjs'
 import { Button } from 'primereact/button'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { useState } from 'react'
 
+type EditorTemplate = {
+  title: string
+  content: string
+}
+
 export const Journal = () => {
   const now = dayjs().format('YYYY-MM-DD')
-  const templates = ["I'm grateful for", 'I feel', 'Weekly recap', 'My top priority today']
+  const templates: EditorTemplate[] = [
+    {
+      title: 'Blank entry',
+      content: ''
+    },
+    { title: "I'm grateful for", content: "# This is what I'm grateful for" },
+    { title: 'I feel...', content: 'I feel like this...' },
+    { title: 'Weekly recap', content: 'This week has been intersting' }
+  ]
   const [isFocused, setIsFocused] = useState(false)
+  const [editorInitialContent, setEditorInitialContent] = useState('')
+  const [isEditorOpen, setIsEditorOpen] = useState(false)
+
+  if (isEditorOpen) {
+    return <JournalEditor intialContent={editorInitialContent} />
+  }
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
@@ -18,7 +37,7 @@ export const Journal = () => {
           <p className="">{now}</p>
         </div>
       </div>
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full px-4">
         <StatCard
           title="Current Streak"
           // TODO: this needs to come from the metadata store
@@ -34,19 +53,22 @@ export const Journal = () => {
       <div className="mt-8 p-4">
         <InputTextarea
           placeholder="What's on your mind?"
-          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 text-black"
+          className="w-full p-3 border border-gray-300 rounded-lg h-3 shadow-sm focus:ring focus:ring-blue-300 text-black"
           autoResize
           onFocus={() => setIsFocused(true)}
           onBlur={() => setTimeout(() => setIsFocused(false), 200)}
         />
         {isFocused && (
-          <div className="mt-2 flex gap-2">
+          <div className="mt-2 flex space-x-2">
             {templates.map((template) => (
               <Button
-                key={template}
-                label={template}
-                className="p-button-sm p-button-outlined"
-                onClick={() => console.log(template)}
+                key={template.title}
+                label={template.title}
+                className="p-button-sm p-button-outlined bg-zinc-500/50 rounded-lg hover:transition-all hover:scale-105 border border-gray-100/50 flex-1"
+                onClick={() => {
+                  setEditorInitialContent(template.content)
+                  setIsEditorOpen(true)
+                }}
               />
             ))}
           </div>
