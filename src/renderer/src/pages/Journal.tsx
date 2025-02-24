@@ -1,5 +1,5 @@
 import { StatCard, JournalEditor } from '@/components'
-import { journalTemplatesAtom } from '@renderer/store'
+import { journalEntriesAtom, journalTemplatesAtom } from '@renderer/store'
 import dayjs from 'dayjs'
 import { useAtomValue } from 'jotai'
 import { Button } from 'primereact/button'
@@ -12,12 +12,17 @@ export const Journal = () => {
   const [isFocused, setIsFocused] = useState(false)
   const [editorInitialContent, setEditorInitialContent] = useState('')
   const [isEditorOpen, setIsEditorOpen] = useState(false)
+  const journalEntries = useAtomValue(journalEntriesAtom)
 
   if (isEditorOpen) {
     return (
       <JournalEditor
         initialContent={editorInitialContent}
-        onCancel={() => setIsEditorOpen(false)}
+        handleCancel={() => setIsEditorOpen(false)}
+        handleSave={(content, utcCreateDateTime) => {
+          console.log(content, utcCreateDateTime)
+          setIsEditorOpen(false)
+        }}
       />
     )
   }
@@ -70,26 +75,24 @@ export const Journal = () => {
       </div>
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-4">Recent Entries</h2>
-        <div className="space-y-4">
-          {[...Array(3)].map((_, index) => (
-            <div
-              key={index}
-              className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-            >
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-medium text-gray-900">Morning Reflection</h3>
-                  <p className="text-gray-600 text-sm mt-1">
-                    Started working on the new project...
-                  </p>
+        {journalEntries && journalEntries.length > 0 ? (
+          <div className="space-y-4">
+            {journalEntries.map((entry, index) => (
+              <div
+                key={index}
+                className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+              >
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-medium text-gray-900">{entry.title}</h3>
+                    <p className="text-gray-600 text-sm mt-1">{entry.content}</p>
+                  </div>
+                  <span className="text-sm text-gray-500">{dayjs(entry.date).format('MMM D')}</span>
                 </div>
-                <span className="text-sm text-gray-500">
-                  {dayjs().subtract(index, 'day').format('MMM D')}
-                </span>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   )

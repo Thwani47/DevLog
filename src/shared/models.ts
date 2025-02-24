@@ -9,13 +9,15 @@ export interface Todo {
 }
 
 export interface TIL {
-  id: number
+  _id: string
   title: string
   date: string
   tags?: string[]
 }
 
-export interface EditorTemplate {
-  tritle: string
+export interface JournalEntry {
+  _id: string
+  title: string
+  date: string
   content: string
 }

@@ -1,4 +1,11 @@
-import { AddTodo, DeleteTodo, EditTodo, GetTodos } from '@shared/types'
+import {
+  AddTodo,
+  DeleteTodo,
+  EditTodo,
+  GetJournalEntries,
+  GetTodos,
+  SaveJournalEntry
+} from '@shared/types'
 
 declare global {
   interface Window {
@@ -8,6 +15,8 @@ declare global {
       addTodo: AddTodo
       editTodo: EditTodo
       deleteTodo: DeleteTodo
+      saveJournalEntry: SaveJournalEntry
+      getJournalEntries: GetJournalEntries
     }
   }
 }

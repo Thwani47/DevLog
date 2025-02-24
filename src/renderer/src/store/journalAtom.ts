@@ -1,4 +1,6 @@
+import { JournalEntry } from '@shared/models'
 import { atom } from 'jotai'
+import { unwrap } from 'jotai/utils'
 
 const editorTemplates = [
   {
@@ -69,3 +71,14 @@ const editorTemplates = [
 ]
 
 export const journalTemplatesAtom = atom(editorTemplates)
+
+const getJournalEntries = async () => {
+  const entries = await window.context.getJournalEntries()
+  return entries
+}
+
+export const journalEntriesAtomAsync = atom<JournalEntry[] | Promise<JournalEntry[]>>(
+  getJournalEntries()
+)
+
+export const journalEntriesAtom = unwrap(journalEntriesAtomAsync, (prev) => prev)

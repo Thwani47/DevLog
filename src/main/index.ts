@@ -2,8 +2,15 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { AddTodo, DeleteTodo, EditTodo, GetTodos } from '@shared/types'
-import { addTodo, deleteTodo, editTodo, getTodos } from '@/lib'
+import {
+  AddTodo,
+  DeleteTodo,
+  EditTodo,
+  GetJournalEntries,
+  GetTodos,
+  SaveJournalEntry
+} from '@shared/types'
+import { addTodo, deleteTodo, editTodo, getJournalEntries, getTodos, saveJournalEntry } from '@/lib'
 
 function createWindow(): void {
   // Create the browser window.
@@ -62,6 +69,12 @@ app.whenReady().then(() => {
   ipcMain.handle('addTodo', (_, ...args: Parameters<AddTodo>) => addTodo(...args))
   ipcMain.handle('editTodo', (_, ...args: Parameters<EditTodo>) => editTodo(...args))
   ipcMain.handle('deleteTodo', (_, ...args: Parameters<DeleteTodo>) => deleteTodo(...args))
+  ipcMain.handle('saveJournalEntry', (_, ...args: Parameters<SaveJournalEntry>) =>
+    saveJournalEntry(...args)
+  )
+  ipcMain.handle('getJournalEntries', (_, ...args: Parameters<GetJournalEntries>) =>
+    getJournalEntries(...args)
+  )
   createWindow()
 
   app.on('activate', function () {

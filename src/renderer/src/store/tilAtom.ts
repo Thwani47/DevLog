@@ -3,7 +3,7 @@ import { atom } from 'jotai'
 
 export const recentTilsAtom = atom<TIL[]>([
   {
-    id: 1,
+    _id: '1',
     title: 'Learned about Jotai state management',
     date: 'Jan 30, 2025',
     tags: ['React', 'State']
