@@ -17,15 +17,20 @@ export const Journal = () => {
       content: ''
     },
     { title: "I'm grateful for", content: "# This is what I'm grateful for" },
-    { title: 'I feel...', content: 'I feel like this...' },
-    { title: 'Weekly recap', content: 'This week has been intersting' }
+    { title: 'I feel...', content: '# I feel like this...' },
+    { title: 'Weekly recap', content: '# This week has been intersting' }
   ]
   const [isFocused, setIsFocused] = useState(false)
   const [editorInitialContent, setEditorInitialContent] = useState('')
   const [isEditorOpen, setIsEditorOpen] = useState(false)
 
   if (isEditorOpen) {
-    return <JournalEditor intialContent={editorInitialContent} />
+    return (
+      <JournalEditor
+        initialContent={editorInitialContent}
+        onCancel={() => setIsEditorOpen(false)}
+      />
+    )
   }
 
   return (
