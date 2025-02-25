@@ -1,10 +1,12 @@
 import { StatCard, JournalEditor } from '@/components'
-import { journalEntriesAtom, journalTemplatesAtom } from '@renderer/store'
+import { journalEntriesAtom, journalTemplatesAtom, saveJournalAtom } from '@renderer/store'
+import { JournalEntry } from '@shared/models'
 import dayjs from 'dayjs'
-import { useAtomValue } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { Button } from 'primereact/button'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 export const Journal = () => {
   const now = dayjs().format('YYYY-MM-DD')
@@ -13,14 +15,26 @@ export const Journal = () => {
   const [editorInitialContent, setEditorInitialContent] = useState('')
   const [isEditorOpen, setIsEditorOpen] = useState(false)
   const journalEntries = useAtomValue(journalEntriesAtom)
+  const saveJournalEntry = useSetAtom(saveJournalAtom)
+
+  console.log(journalEntries)
+
+  // TODO: add Quill as a alternative editor
 
   if (isEditorOpen) {
     return (
       <JournalEditor
         initialContent={editorInitialContent}
         handleCancel={() => setIsEditorOpen(false)}
-        handleSave={(content, utcCreateDateTime) => {
-          console.log(content, utcCreateDateTime)
+        handleSave={async (content, utcCreateDateTime) => {
+          const hash = uuidv4().replace(/-/g, '').substring(0, 5)
+          const newEntry: JournalEntry = {
+            _id: uuidv4(),
+            title: `${dayjs(utcCreateDateTime).format('YYYY-MM-DD')}-${hash}`,
+            content,
+            date: dayjs(utcCreateDateTime).toISOString()
+          }
+          await saveJournalEntry(newEntry)
           setIsEditorOpen(false)
         }}
       />

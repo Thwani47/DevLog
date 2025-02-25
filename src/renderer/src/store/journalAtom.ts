@@ -82,3 +82,14 @@ export const journalEntriesAtomAsync = atom<JournalEntry[] | Promise<JournalEntr
 )
 
 export const journalEntriesAtom = unwrap(journalEntriesAtomAsync, (prev) => prev)
+
+export const saveJournalAtom = atom(null, async (get, set, entry: JournalEntry) => {
+  const journalEntries = get(journalEntriesAtom)
+
+  if (!journalEntries) return
+  await window.context.saveJournalEntry(entry)
+
+  set(journalEntriesAtom, [...journalEntries, entry])
+
+  return entry
+})
