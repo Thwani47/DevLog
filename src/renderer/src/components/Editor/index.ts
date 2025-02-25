@@ -1,1 +1,2 @@
-export * from './JournalEditor'
+export * from './JournalMDEditor'
+export * from './JournalQuillEditor'

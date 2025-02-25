@@ -13,7 +13,9 @@ const journalEntriesDb = new PouchDB('journalEntries', {
 export const saveJournalEntry: SaveJournalEntry = async (entry) => {
   ensureRootDir()
   console.log('Writing entry to file: ', entry)
-  writeFile(`${getRootDir()}/journalEntries/entries/${entry.title}.md`, entry.content, { encoding: 'utf8' })
+  writeFile(`${getRootDir()}/journalEntries/entries/${entry.title}.md`, entry.content, {
+    encoding: 'utf8'
+  })
 
   console.log('writing entry to DB')
   const result = await journalEntriesDb.put(entry)

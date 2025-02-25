@@ -6,8 +6,8 @@ export type StartCardProps = ComponentProps<'div'> & {
 }
 
 export const StatCard = ({ title, value }: StartCardProps) => (
-  <div className="flex-1 bg-white rounded-lg p-4 shadow-sm mr-4">
-    <div className="text-gray-900 text-sm">{title}</div>
-    <span className="text-2xl font-semibold text-gray-900">{value}</span>
+  <div className="flex-1 bg-transparent border border-zinc-500 rounded-lg p-4 shadow-sm mr-4 flex flex-col items-center justify-center">
+    <div className="text-zinc-100 text-sm font-bold mb-1">{title}</div>
+    <span className="text-2xl font-semibold text-zinc-100">{value}</span>
   </div>
 )

@@ -1,4 +1,4 @@
-import { StatCard, JournalEditor } from '@/components'
+import { StatCard, JournalMarkdownEditor, JournalQuillEditor } from '@/components'
 import { journalEntriesAtom, journalTemplatesAtom, saveJournalAtom } from '@renderer/store'
 import { JournalEntry } from '@shared/models'
 import dayjs from 'dayjs'
@@ -13,17 +13,16 @@ export const Journal = () => {
   const editorTemplates = useAtomValue(journalTemplatesAtom)
   const [isFocused, setIsFocused] = useState(false)
   const [editorInitialContent, setEditorInitialContent] = useState('')
+  const [editor, setEditor] = useState('quill') // TODO: This needs to come from the user metadata
   const [isEditorOpen, setIsEditorOpen] = useState(false)
   const journalEntries = useAtomValue(journalEntriesAtom)
   const saveJournalEntry = useSetAtom(saveJournalAtom)
 
-  console.log(journalEntries)
-
   // TODO: add Quill as a alternative editor
 
   if (isEditorOpen) {
-    return (
-      <JournalEditor
+    return editor === 'markdown' ? (
+      <JournalMarkdownEditor
         initialContent={editorInitialContent}
         handleCancel={() => setIsEditorOpen(false)}
         handleSave={async (content, utcCreateDateTime) => {
@@ -38,6 +37,8 @@ export const Journal = () => {
           setIsEditorOpen(false)
         }}
       />
+    ) : (
+      <JournalQuillEditor />
     )
   }
 

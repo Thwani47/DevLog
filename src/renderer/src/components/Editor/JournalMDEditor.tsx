@@ -11,13 +11,17 @@ import dayjs from 'dayjs'
 import { Button } from 'primereact/button'
 import { ComponentProps, useRef } from 'react'
 
-export type JournalEditorProps = ComponentProps<'div'> & {
+export type JournalMarkdownEditorProps = ComponentProps<'div'> & {
   initialContent: string
   handleCancel: () => void
   handleSave: (content: string, utcCreateDateTime: Date) => void
 }
 
-export const JournalEditor = ({ initialContent, handleCancel, handleSave }: JournalEditorProps) => {
+export const JournalMarkdownEditor = ({
+  initialContent,
+  handleCancel,
+  handleSave
+}: JournalMarkdownEditorProps) => {
   const now = dayjs().format('YYYY-MM-DD')
   const ref = useRef<MDXEditorMethods>(null)
 
