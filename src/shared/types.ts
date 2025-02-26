@@ -9,3 +9,8 @@ export type DeleteTodo = (todo: Todo) => Promise<boolean>
 // journal
 export type SaveJournalEntry = (entry: JournalEntry) => Promise<JournalEntry>
 export type GetJournalEntries = () => Promise<JournalEntry[]>
+
+// Settings
+export type AppSettings = {
+  editor: 'markdown' | 'quill'
+}

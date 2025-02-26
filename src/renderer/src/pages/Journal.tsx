@@ -1,4 +1,4 @@
-import { StatCard, JournalMarkdownEditor, JournalQuillEditor } from '@/components'
+import { StatCard, JournalEditor } from '@/components'
 import { journalEntriesAtom, journalTemplatesAtom, saveJournalAtom } from '@renderer/store'
 import { JournalEntry } from '@shared/models'
 import dayjs from 'dayjs'
@@ -6,6 +6,7 @@ import { useAtomValue, useSetAtom } from 'jotai'
 import { Button } from 'primereact/button'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { useState } from 'react'
+import Markdown from 'react-markdown'
 import { v4 as uuidv4 } from 'uuid'
 
 export const Journal = () => {
@@ -13,23 +14,19 @@ export const Journal = () => {
   const editorTemplates = useAtomValue(journalTemplatesAtom)
   const [isFocused, setIsFocused] = useState(false)
   const [editorInitialContent, setEditorInitialContent] = useState('')
-  const [editor, setEditor] = useState('quill') // TODO: This needs to come from the user metadata
   const [isEditorOpen, setIsEditorOpen] = useState(false)
   const journalEntries = useAtomValue(journalEntriesAtom)
   const saveJournalEntry = useSetAtom(saveJournalAtom)
 
-  // TODO: add Quill as a alternative editor
-
   if (isEditorOpen) {
-    return editor === 'markdown' ? (
-      <JournalMarkdownEditor
+    return (
+      <JournalEditor
         initialContent={editorInitialContent}
         handleCancel={() => setIsEditorOpen(false)}
-        handleSave={async (content, utcCreateDateTime) => {
-          const hash = uuidv4().replace(/-/g, '').substring(0, 5)
+        handleSave={async (title, content, utcCreateDateTime) => {
           const newEntry: JournalEntry = {
             _id: uuidv4(),
-            title: `${dayjs(utcCreateDateTime).format('YYYY-MM-DD')}-${hash}`,
+            title,
             content,
             date: dayjs(utcCreateDateTime).toISOString()
           }
@@ -37,8 +34,6 @@ export const Journal = () => {
           setIsEditorOpen(false)
         }}
       />
-    ) : (
-      <JournalQuillEditor />
     )
   }
 
@@ -95,12 +90,15 @@ export const Journal = () => {
             {journalEntries.map((entry, index) => (
               <div
                 key={index}
-                className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                className="p-4 border border-zinc-100 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="font-medium text-gray-900">{entry.title}</h3>
-                    <p className="text-gray-600 text-sm mt-1">{entry.content}</p>
+                    <h3 className="font-medium text-zinc-100">
+                      {dayjs(entry.date).format('YYYY-MM-DD')}
+                    </h3>
+                    <Markdown>{'# Hi Pluto'}</Markdown>
+                    {/* <p className="text-gray-600 text-sm mt-1">{entry.content}</p> */}
                   </div>
                   <span className="text-sm text-gray-500">{dayjs(entry.date).format('MMM D')}</span>
                 </div>
