@@ -35,5 +35,8 @@
   ::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
+}
 
+.ql-container.ql-snow {
+  @apply border-none !important;
 }

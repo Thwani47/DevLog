@@ -5,7 +5,6 @@ import { useAtomValue } from 'jotai'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { ComponentProps, useRef, useState } from 'react'
-import Markdown from 'react-markdown'
 import { JournalMarkdownEditor } from './JournalMarkdownEditor'
 import { JournalQuillEditor } from './JournalQuillEditor'
 
@@ -69,11 +68,13 @@ export const JournalEditor = ({ initialContent, handleCancel, handleSave }: Jour
           } text-black`}
         />
       </div>
-      {appSettings.editor === 'markdown' ? (
-        <JournalMarkdownEditor ref={ref} initialContent={initialContent} />
-      ) : (
-        <JournalQuillEditor />
-      )}
+      <div className="p-4 flex flex-col h-screen">
+        {appSettings.editor === 'markdown' ? (
+          <JournalMarkdownEditor ref={ref} initialContent={initialContent} />
+        ) : (
+          <JournalQuillEditor />
+        )}
+      </div>
     </div>
   )
 }

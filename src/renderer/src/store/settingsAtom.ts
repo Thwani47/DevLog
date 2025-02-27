@@ -2,6 +2,6 @@ import { AppSettings } from '@shared/types'
 import { atom } from 'jotai'
 
 const defaultSettings: AppSettings = {
-  editor: 'markdown'
+  editor: 'quill'
 }
 export const applicationSettingsAtom = atom<AppSettings>(defaultSettings)
